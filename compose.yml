@@ -1,0 +1,9 @@
+services:
+  app: # サービス名
+    build: .
+    restart: always
+    container_name: "app"
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./app:/go/src/app # マウントディレクトリ
