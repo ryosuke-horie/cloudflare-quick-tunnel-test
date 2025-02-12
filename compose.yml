@@ -1,14 +1,40 @@
 services:
-  app: # サービス名
-    build: .
+  app:
+    build: 
+      context: .
+      dockerfile: Dockerfile
     restart: always
     container_name: "app"
     ports:
       - "8080:8080"
+
+  web:
+    build: 
+      context: .
+      dockerfile: Dockerfile.web
+    container_name: "web"
+    ports:
+      - "3000:3000"
+    # ※ 同様に、開発時のみマウントする場合は volumes を利用。不要なら削除してください。
     volumes:
-      - ./app:/go/src/app
+      - ./web:/app
+    environment:
+      - NODE_ENV=production
+
+  nginx:
+    image: nginx:latest
+    container_name: "nginx"
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - app
+      - web
+
   cloudflared:
     image: cloudflare/cloudflared:latest
     depends_on:
-      - app
-    command: tunnel --no-autoupdate --url http://app:8080
+      - nginx
+    # Cloudflared は Nginx が公開している 80 番ポートにトンネルする設定
+    command: tunnel --no-autoupdate --url http://nginx:80
