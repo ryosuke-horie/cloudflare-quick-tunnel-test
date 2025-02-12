@@ -6,4 +6,9 @@ services:
     ports:
       - "8080:8080"
     volumes:
-      - ./app:/go/src/app # マウントディレクトリ
+      - ./app:/go/src/app
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    depends_on:
+      - app
+    command: tunnel --no-autoupdate --url http://app:8080

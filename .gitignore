@@ -1,0 +1,2 @@
+# Ignore the data directory where temporary files are stored
+data/*
