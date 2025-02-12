@@ -1,8 +1,15 @@
 # cloudflare-quick-tunnel-test
 
+## 実装内容
+
+- Nginxを経由してNextjsとGolangを起動
+- NginxをCloudflareで公開することで外部からのアクセスを許可
+
 ## 簡易URLで公開する手順
 
 ```bash
+cd web && npm i && npm run build
+cd ..
 docker compose up -d
 chmod +x get_tunnel_url.sh 
 ./get_tunnel_url.
