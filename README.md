@@ -11,6 +11,7 @@ chmod +x get_tunnel_url.sh
 - https://genres-rebates-hosts-away.trycloudflare.com
     - のようなURLが割り当てされていることを確認。
     - ブラウザで外部からアクセスできることを確認。
+    - `docker compose down`を実行したらアクセスできなくなることを確認
 
 ## 参考元
 
